@@ -1,0 +1,41 @@
+digraph G {
+    splines=ortho;
+
+    start [shape=rect, label="Start"];
+    while_loop [shape=point];
+    if_init [shape=diamond, label="if (state == INIT)"];
+    init_block [shape=rect, label="lcd_init()\nlcd_customchar() calls\njump_counter = 0\nstate = OPENING"];
+    merge_init [shape=point];
+    if_opening [shape=diamond, label="else if (state == OPENING)"];
+    pt0 [shape=point];
+    opening_block [shape=rect, label="opening()\nstate = PLAY"];
+    merge_opening [shape=point];
+    if_play [shape=diamond, label="else if (state == PLAY)"];
+    play_block [shape=rect, label="play()\nstate = ENDING"];
+    merge_play [shape=point];
+    if_ending [shape=diamond, label="else if (state == ENDING)"];
+    ending_block [shape=rect, label="ending()"];
+    merge_ending [shape=point];
+    end [shape=rect, label="End"];
+
+    start -> while_loop;
+    while_loop -> if_init;
+    if_init -> init_block [label="True"];
+    init_block -> merge_init;
+    merge_init -> if_opening;
+    if_opening -> opening_block [label="True"];
+    opening_block -> merge_opening;
+    merge_opening -> if_play;
+    if_play -> play_block [label="True"];
+    play_block -> merge_play;
+    merge_play -> if_ending;
+    if_ending -> ending_block [label="True"];
+    ending_block -> merge_ending;
+    merge_ending -> while_loop;
+
+    if_init -> merge_init [label="False"];
+    if_opening -> pt0 [label="False"];
+    pt0 -> merge_opening ;
+    if_play -> merge_play [label="False"];
+    if_ending -> end [label="False"];
+}

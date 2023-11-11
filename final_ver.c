@@ -38,6 +38,15 @@ void opening();
 void ending();
 
 void lcd_customchar(unsigned int addr, unsigned int *bitmap);
+void beep();
+void beep2();
+int lcgs();
+void show_rand_floor();
+void show_character();
+void seg7(int x);
+void title_screen();
+void titel_cursor();
+void interrupt_handler();
 int beep_counter = 0;
 int beep_counter_2 = 0;
 int cursor_state = 0;
