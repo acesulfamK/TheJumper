@@ -1,0 +1,45 @@
+digraph G {
+    node [shape=rectangle]; // Default shape for nodes
+    splines=ortho; // Set all edges to orthogonal
+
+    start [label="Start show_rand_floor", shape=ellipse];
+    lcdCmd [label="lcd_cmd(0x94 + 0)", shape=rect];
+    checkCounter [label="counter == 0", shape=diamond];
+    initializeFloor [label="Initialize floor to all 0", shape=rect];
+    updateFloor [label="counter % STEP_TIME == 0", shape=diamond];
+    updateLoop [label="Update floor loop (shift to left)", shape=rect];
+    checkVacantObst [label="vacant_counter == 0 && obst_counter == 0", shape=diamond];
+    setVacantObst [label="Set vacant_counter and obst_counter", shape=rect];
+    checkObstCounter [label="obst_counter == 0", shape=diamond];
+    setFloorZero [label="floor[FLOOR_MAX - 1] = 0; vacant_counter--", shape=rect];
+    setFloorOne [label="floor[FLOOR_MAX - 1] = 1; obst_counter--", shape=rect];
+    checkFloor [label="floor[0] == 1", shape=diamond];
+    incrementJump [label="jump_counter++", shape=rect];
+    showFloorLoop [label="Show floor loop", shape=rect];
+    checkCollision [label="floor[0] == 1 && jump_state == 0", shape=diamond];
+    collisionActions [label="Collision Actions", shape=rect];
+    end [label="End show_rand_floor", shape=ellipse];
+
+    start -> lcdCmd;
+    lcdCmd -> checkCounter;
+    checkCounter -> initializeFloor [label="True"];
+    checkCounter -> updateFloor [label="False"];
+    initializeFloor -> updateFloor;
+    updateFloor -> updateLoop [label="True"];
+    updateFloor -> showFloorLoop [label="False"];
+    updateLoop -> checkVacantObst;
+    checkVacantObst -> setVacantObst [label="True"];
+    checkVacantObst -> checkObstCounter [label="False"];
+    setVacantObst -> checkObstCounter;
+    checkObstCounter -> setFloorZero [label="True"];
+    checkObstCounter -> setFloorOne [label="False"];
+    setFloorZero -> checkFloor;
+    setFloorOne -> checkFloor;
+    checkFloor -> incrementJump [label="True"];
+    checkFloor -> showFloorLoop [label="False"];
+    incrementJump -> showFloorLoop;
+    showFloorLoop -> checkCollision;
+    checkCollision -> collisionActions [label="True"];
+    checkCollision -> end [label="False"];
+    collisionActions -> end;
+}

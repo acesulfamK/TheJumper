@@ -1,0 +1,35 @@
+digraph show_character {
+    splines=ortho
+    start [shape=rect, label="Start show_character()"];
+    if_counter [shape=diamond, label="counter % STEP_TIME == 0"];
+    switch_jump_state_1 [shape=diamond, label="switch(jump_state)"];
+    case0_1 [shape=rect, label="case 0:\nbreak;"];
+    caseJUMP_TIME_1 [shape=rect, label="case JUMP_TIME:\njump_state = 0;\nbreak;"];
+    default_case_1 [shape=rect, label="default:\njump_state++;\nbreak;"];
+    merge1 [shape=point];
+    switch_jump_state_2 [shape=diamond, label="switch(jump_state)"];
+    case0_2 [shape=rect, label="case 0:\njump_down();"];
+    case1_2 [shape=rect, label="case 1:\nlcd_cmd(0xc0);\nlcd_data(0x08);\nlcd_cmd(0x94);\nlcd_data(0x04);"];
+    default_case_2 [shape=rect, label="default:\njump_up();"];
+    merge2 [shape=point];
+    end [shape=rect, label="End show_character()"];
+
+    // エッジを定義
+    start -> if_counter;
+    if_counter -> switch_jump_state_1 [label="true"];
+    if_counter:e -> merge1 [label= "false"];
+    switch_jump_state_1 -> case0_1 [label="case 0"];
+    switch_jump_state_1 -> caseJUMP_TIME_1 [label="case JUMP_TIME"];
+    switch_jump_state_1 -> default_case_1 [label="default"];
+    case0_1 -> merge1;
+    caseJUMP_TIME_1 -> merge1;
+    default_case_1 -> merge1;
+    merge1 -> switch_jump_state_2;
+    switch_jump_state_2 -> case0_2 [label="case 0"];
+    switch_jump_state_2 -> case1_2 [label="case 1"];
+    switch_jump_state_2 -> default_case_2 [label="default"];
+    case0_2 -> merge2;
+    case1_2 -> merge2;
+    default_case_2 -> merge2;
+    merge2 -> end;
+}

@@ -1,0 +1,35 @@
+digraph G {
+    node [shape=rectangle]; // Default shape for nodes
+    splines=ortho
+    start [label="Start interrupt_handler", shape=ellipse];
+    decision [label="Check state", shape=diamond];
+    titleScreen [label="title_screen()", shape=rect];
+    titleCursor [label="title_cursor()", shape=rect];
+    lcdCmd [label="lcd_cmd(0x01)", shape=rect];
+    seg7_1 [label="seg7(jump_counter)", shape=rect];
+    showRandFloor [label="show_rand_floor()", shape=rect];
+    showCharacter [label="show_character()", shape=rect];
+    seg7_2 [label="seg7(jump_counter)", shape=rect];
+    gameOver [label="game_over()", shape=rect];
+    incrementCounter [label="counter++", shape=rect];
+    beepFunc [label="beep(0)", shape=rect];
+    beep2Func [label="beep2(0)", shape=rect];
+    end [label="End interrupt_handler", shape=ellipse];
+
+    start -> decision [splines=ortho];
+    decision -> titleScreen [label="state == OPENING", splines=ortho];
+    decision -> lcdCmd [label="state == PLAY", splines=ortho];
+    decision -> seg7_2 [label="state == ENDING", splines=ortho];
+    decision -> incrementCounter [label="state == INIT", splines=ortho];
+    titleScreen -> titleCursor [splines=ortho];
+    titleCursor -> incrementCounter [splines=ortho];
+    lcdCmd -> seg7_1 [splines=ortho];
+    seg7_1 -> showRandFloor [splines=ortho];
+    showRandFloor -> showCharacter [splines=ortho];
+    showCharacter -> incrementCounter [splines=ortho];
+    seg7_2 -> gameOver [splines=ortho];
+    gameOver -> incrementCounter [splines=ortho];
+    incrementCounter -> beepFunc [splines=ortho];
+    beepFunc -> beep2Func [splines=ortho];
+    beep2Func -> end [splines=ortho];
+}

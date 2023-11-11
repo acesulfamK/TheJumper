@@ -1,0 +1,48 @@
+
+digraph G {
+    splines=ortho;
+
+    // Define the shape for the nodes
+    node [shape=rect];
+    start [label="Start show_rand_floor"];
+    lcd_cmd [label="lcd_cmd(0x94 + 0)"];
+    check_counter [shape=diamond, label="counter == 0"];
+    init_for_loop [label="for loop to initialize floor[]"];
+    update_check [shape=diamond, label="counter % STEP_ == 0"];
+    update_for_loop [label="for loop to update floor[]"];
+    check_vacant [shape=diamond, label="vacant_count < MAX_VACANT"];
+    update_vacant [label="Update vacant_count and obst_counter"];
+    check_obst [shape=diamond, label="obst_counter > 0"];
+    update_floor_obst [label="Update floor[FLOOR_SIZE - 1]"];
+    else_update_floor [label="Update floor[FLOOR_SIZE - 1] and obst_counter"];
+    check_floor [shape=diamond, label="floor[0] == 1"];
+    increment_jump [label="Increment jump_counter"];
+    display_for_loop [label="for loop to display floor[]"];
+    collision_check [shape=diamond, label="floor[0] == 1 & is_obstacle"];
+    end_game [label="Set state to ENDING, beep2(1), clear floor[], reset counter"];
+    end [label="End show_rand_floor"];
+
+    // Define the edges
+    start -> lcd_cmd;
+    lcd_cmd -> check_counter;
+    check_counter -> init_for_loop [label="true"];
+    check_counter -> update_check [label="false"];
+    init_for_loop -> update_check;
+    update_check -> update_for_loop [label="true"];
+    update_check -> display_for_loop [label="false"];
+    update_for_loop -> check_vacant;
+    check_vacant -> update_vacant [label="true"];
+    check_vacant -> check_obst [label="false"];
+    update_vacant -> check_floor;
+    check_obst -> update_floor_obst [label="true"];
+    check_obst -> else_update_floor [label="false"];
+    update_floor_obst -> check_floor;
+    else_update_floor -> check_floor;
+    check_floor -> increment_jump [label="true"];
+    check_floor -> display_for_loop [label="false"];
+    increment_jump -> display_for_loop;
+    display_for_loop -> collision_check;
+    collision_check -> end_game [label="true"];
+    collision_check -> end [label="false"];
+    end_game -> end;
+}

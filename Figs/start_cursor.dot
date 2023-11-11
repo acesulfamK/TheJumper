@@ -1,0 +1,62 @@
+digraph G {
+    node [shape=rectangle]; // Default shape for nodes
+    splines=ortho; // Set all edges to orthogonal
+
+    start [label="Start title_cursor", shape=ellipse];
+    decision [label="Check cursor_state", shape=diamond];
+    state0 [label="cursor_state == 0", shape=rect];
+    lcdCmdD5 [label="lcd_cmd(0xd5)", shape=rect];
+    lcdData07_0 [label="lcd_data(0x07)", shape=rect];
+    btnCheck0_0 [label="btn_check_0()", shape=diamond];
+    btnCheck1_0 [label="btn_check_1()", shape=diamond];
+    updateState2 [label="cursor_state = 2", shape=rect];
+    updateState1_0 [label="cursor_state = 1", shape=rect];
+    state1 [label="cursor_state == 1", shape=rect];
+    lcdCmdDA [label="lcd_cmd(0xda)", shape=rect];
+    lcdData07_1 [label="lcd_data(0x07)", shape=rect];
+    btnCheck0_1 [label="btn_check_0()", shape=diamond];
+    btnCheck1_1 [label="btn_check_1()", shape=diamond];
+    updateState0 [label="cursor_state = 0", shape=rect];
+    updateState2_1 [label="cursor_state = 2", shape=rect];
+    state2 [label="cursor_state == 2", shape=rect];
+    lcdCmdE1 [label="lcd_cmd(0xe1)", shape=rect];
+    lcdData07_2 [label="lcd_data(0x07)", shape=rect];
+    btnCheck0_2 [label="btn_check_0()", shape=diamond];
+    btnCheck1_2 [label="btn_check_1()", shape=diamond];
+    updateState1_2 [label="cursor_state = 1", shape=rect];
+    updateState0_2 [label="cursor_state = 0", shape=rect];
+    pt0 [shape=point];
+
+    start -> decision;
+    decision -> state0 [label="0"];
+    decision -> state1 [label="1"];
+    decision -> state2 [label="2"];
+    state0 -> lcdCmdD5;
+    lcdCmdD5 -> lcdData07_0;
+    lcdData07_0 -> btnCheck0_0;
+    btnCheck0_0 -> updateState2 [label="True"];
+    btnCheck0_0 -> btnCheck1_0 [label="False"];
+    btnCheck1_0 -> updateState1_0 [label="True"];
+    btnCheck1_0 -> end[label="False"];
+    updateState2 -> end;
+    updateState1_0 -> end;
+    state1 -> lcdCmdDA;
+    lcdCmdDA -> lcdData07_1;
+    lcdData07_1 -> btnCheck0_1;
+    btnCheck0_1 -> updateState0 [label="True"];
+    btnCheck0_1 -> btnCheck1_1 [label="False"];
+    btnCheck1_1 -> updateState2_1 [label="True"];
+    btnCheck1_1 -> end [label="False"];
+    updateState0 -> end;
+    updateState2_1 -> end;
+    state2 -> lcdCmdE1;
+    lcdCmdE1 -> lcdData07_2;
+    lcdData07_2 -> btnCheck0_2;
+    btnCheck0_2 -> updateState1_2 [label="True"];
+    btnCheck0_2 -> btnCheck1_2 [label="False"];
+    btnCheck1_2 -> updateState0_2 [label="True"];
+    btnCheck1_2 -> end [label="False"];
+    pt0 -> end;
+    updateState1_2 -> end;
+    updateState0_2 -> end;
+}

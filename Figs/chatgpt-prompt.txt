@@ -1,0 +1,76 @@
+以下のC言語をdotファイルに変換して、graphvizのフローチャートのdotファイルを生成して
+その際、以下の点に注意して。
+- switch, if, else などは制御文であり、フローチャートではshape=diamondで指定される
+- 関数呼び出しや値の代入、計算はそれぞれが１つの文であり、shape=rectで囲まれる
+- 一連の文が意味を持っている場合、shape=rectで囲み、その中で命令ごとに改行する
+- なるべく多くのエッジが直角に折れ曲がるようにする。これは、splines=orthoを、ブロックの最初に書けばいい。
+- shape=diamondもshape=rectも、endに指定している矢印がノードの上(nポートから入るようにする)
+- 複数のエッジが1つのノードに合流する際には、途中でそれらのエッジを合流させ、1つに束ねてからノードを指すようにする。つまり、1つのノードを指すエッジはなるべく1つにする。
+- 出力は抜粋したり省略したりせずに全て行うこと。
+
+上において、複数のエッジを合流させて１つに束ねるには、それらをshape=pointのノードを指すようにし、そのノードから1つのエッジを目的のノードに向かわせるとよい。
+
+
+以下のような資料を参照するといい
+- graphviz
+- dot言語
+- C言語のフローチャート作成手順
+
+void show_rand_floor(){
+	/* array must not b
+	static unsigned lon
+	int is_obstacle;
+	int i;
+
+	lcd_cmd(0x94 + 0); 
+
+	/* initialize floor
+	if (counter == 0){
+		for (i = 0; i <
+			floor[i] = 
+	}
+
+	/* update floor */
+	if (counter % STEP_
+		for (i = 1; i <
+			floor[i - 1
+		}
+
+
+		if (vacant_coun
+			vacant_coun
+			obst_counte
+		} else {
+			if (obst_co
+				floor[F
+				vacant_
+			} else {
+				floor[F
+				obst_co
+			}
+		}
+
+		if (floor[0] ==
+			jump_counte
+	}
+
+	/* show floor */
+	for (i = 0; i < FLO
+		if(floor[i] == 
+			lcd_data(' 
+		} else {
+			lcd_data(0x
+		}
+	}
+
+	/* collision detect
+	if (floor[0] == 1 &
+		state = ENDING;
+		beep2(1);
+		for (i = 0; i <
+			floor[i] = 
+		counter = 0;
+	}
+	
+
+}
