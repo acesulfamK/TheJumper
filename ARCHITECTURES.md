@@ -60,6 +60,7 @@ void titel_cursor(); // タイトル画面のカーソルを表示
 void interrupt_handler(); // 割り込みハンドラ
 ```
 ## main関数とinterrupt handler (左がmain関数、右がinterrupt_handler)
+
 <img src="./Figs/main-interrupthandler.png" style = "200">
 
 
@@ -67,11 +68,11 @@ void interrupt_handler(); // 割り込みハンドラ
 <img src="./Figs/opening-play.png" style = "200">
 
 ## iinterrupt_handler()内のshow_character()とshow_rand_floor()
+
 <img src="./Figs/show-character-randfloor.png" style = "200">
 
 ## interrupt_handler()内におけるtitle_cursor()
 <img src="./Figs/title_cursor.png" style = "200">
-
 
 # 自分が実装した部分の解説
 
