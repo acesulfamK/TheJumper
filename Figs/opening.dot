@@ -1,0 +1,37 @@
+digraph G {
+    splines=ortho;
+
+    start [shape=rect, label="Start opening()"];
+    while_loop [shape=point];
+    if_cursor0 [shape=diamond, label="cursor_state == 0\n&& btn_check_2()"];
+    state_play0 [shape=rect, label="state = PLAY"];
+    break0 [shape=rect, label="break"];
+    merge_if0 [shape=point];
+    if_cursor1 [shape=diamond, label="cursor_state == 1\n&& btn_check_2()"];
+    state_play1 [shape=rect, label="state = PLAY"];
+    break1 [shape=rect, label="break"];
+    merge_if1 [shape=point];
+    if_cursor2 [shape=diamond, label="cursor_state == 2\n&& btn_check_2()"];
+    state_play2 [shape=rect, label="state = PLAY"];
+    break2 [shape=rect, label="break"];
+    merge_if2 [shape=point];
+    end [shape=rect, label="End opening()"];
+
+    start -> while_loop;
+    while_loop -> if_cursor0;
+    if_cursor0 -> state_play0 [label="True"];
+    state_play0 -> break0;
+    break0 -> end;
+    if_cursor0 -> merge_if0 [label="False"];
+    merge_if0 -> if_cursor1;
+    if_cursor1 -> state_play1 [label="True"];
+    state_play1 -> break1;
+    break1 -> end;
+    if_cursor1 -> merge_if1 [label="False"];
+    merge_if1 -> if_cursor2;
+    if_cursor2 -> state_play2 [label="True"];
+    state_play2 -> break2;
+    break2 -> end;
+    if_cursor2 -> merge_if2 [label="False"];
+    merge_if2 -> while_loop;
+}
